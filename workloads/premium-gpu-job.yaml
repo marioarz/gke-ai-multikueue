@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: premium-gpu-job
+  namespace: default
+  labels:
+    kueue.x-k8s.io/queue-name: premium-user-queue
+spec:
+  template:
+    spec:
+      nodeSelector:
+        cloud.google.com/compute-class: ai-compute
+      containers:
+      - name: gpu-container
+        image: nvidia/cuda:12.2.2-base-ubuntu22.04
+        command: ["nvidia-smi"]
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+      restartPolicy: Never
