@@ -1,0 +1,7 @@
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: ResourceFlavor
+metadata:
+  name: gke-l4-gpu
+spec:
+  nodeLabels:
+    cloud.google.com/compute-class: ai-compute
