@@ -1,0 +1,56 @@
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: ClusterQueue
+metadata:
+  name: cluster-queue
+spec:
+  namespaceSelector: {}
+  resourceGroups:
+  - coveredResources: ["cpu", "memory", "nvidia.com/gpu", "ephemeral-storage"]
+    flavors:
+    - name: gke-l4-gpu
+      resources:
+      - name: cpu
+        nominalQuota: 1000
+      - name: memory
+        nominalQuota: 4000Gi
+      - name: nvidia.com/gpu
+        nominalQuota: 32
+      - name: ephemeral-storage
+        nominalQuota: 8000Gi
+---
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: LocalQueue
+metadata:
+  name: user-queue
+  namespace: default
+spec:
+  clusterQueue: cluster-queue
+---
+# NEW: The dedicated premium queue for Worker 2
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: ClusterQueue
+metadata:
+  name: l4-premium-queue
+spec:
+  namespaceSelector: {}
+  resourceGroups:
+  - coveredResources: ["cpu", "memory", "nvidia.com/gpu", "ephemeral-storage"]
+    flavors:
+    - name: gke-l4-gpu
+      resources:
+      - name: cpu
+        nominalQuota: 1000
+      - name: memory
+        nominalQuota: 4000Gi
+      - name: nvidia.com/gpu
+        nominalQuota: 32
+      - name: ephemeral-storage
+        nominalQuota: 8000Gi
+---
+apiVersion: kueue.x-k8s.io/v1beta2
+kind: LocalQueue
+metadata:
+  name: premium-user-queue
+  namespace: default
+spec:
+  clusterQueue: l4-premium-queue
