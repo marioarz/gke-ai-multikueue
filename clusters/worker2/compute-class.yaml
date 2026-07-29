@@ -1,0 +1,27 @@
+apiVersion: cloud.google.com/v1
+kind: ComputeClass
+metadata:
+  name: ai-compute
+spec:
+  priorities:
+  - machineFamily: g2
+    gpu:
+      type: nvidia-l4
+      count: 1
+    reservations:
+      affinity: Specific
+      specific:
+      - name: myreservation
+  - machineFamily: g2
+    gpu:
+      type: nvidia-l4
+      count: 1
+    flexStart:
+      enabled: true
+      nodeRecycling:
+        leadTimeSeconds: 3600
+  - machineFamily: g2
+    gpu:
+      type: nvidia-l4
+      count: 1
+    spot: true
