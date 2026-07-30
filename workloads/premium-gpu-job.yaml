@@ -2,6 +2,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: premium-gpu-job
+  generateName: premium-gpu-job-
   namespace: default
   labels:
     kueue.x-k8s.io/queue-name: premium-user-queue
