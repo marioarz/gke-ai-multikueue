@@ -17,3 +17,7 @@ spec:
       type: nvidia-tesla-t4
       count: 1
     spot: true
+  - machineFamily: g2
+    gpu:
+      type: nvidia-l4
+      count: 1
