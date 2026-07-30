@@ -1,7 +1,6 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: premium-gpu-job
   generateName: premium-gpu-job-
   namespace: default
   labels:
